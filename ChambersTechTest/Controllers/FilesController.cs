@@ -62,6 +62,11 @@ namespace Chambers.Controllers
         public IActionResult GetFile(string filename)
         {
             byte[] fileData = _store.GetFile(filename);
+            if (fileData == null)
+            {
+                return NotFound();
+            }
+
             var result = new FileContentResult(fileData, "application/octet-stream") {FileDownloadName = filename};
             return result;
         }
